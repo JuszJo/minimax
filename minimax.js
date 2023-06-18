@@ -21,6 +21,12 @@ function addMoveToBoard(move, id) {
 
     if(board[row - 1][index] == 0) {
         board[row - 1][index] = move;
+
+        ++movesTaken;
+
+        moves.splice(0, 1);
+
+        moves.push(move);
     }
 }
 
@@ -36,24 +42,43 @@ function addMoveToHTMLBoard(element, move) {
     }
 }
 
-function checkWin() {
+function checkRowWin() {
+    const row1 = board[0];
+    const row2 = board[1];
+    const row3 = board[2];
+
+    let row1Win = false;
+    let row2Win = false;
+    let row3Win = false;
+
+    row1Win = row1.every(move => move != 0 && move == row1[0])
+    row2Win = row2.every(move => move != 0 && move == row2[0])
+    row3Win = row3.every(move => move != 0 && move == row3[0])
+
+    console.log(row1, row2, row3);
+    console.log(row1Win, row2Win, row3Win);
 
 }
 
+function checkColWin() {
+
+}
+
+function checkWin() {
+    if(movesTaken >= minMovesToWin) {
+        checkRowWin()
+        checkColWin()
+    }
+}
+
 function handleSquareClick() {
-    const move = moves.splice(0, 1)[0];
+    const move = moves.slice(0, 1)[0];
 
     addMoveToBoard(move, this.id)
-
-    console.log(board);
 
     addMoveToHTMLBoard(this, move)
 
     checkWin()
-
-    ++movesTaken;
-
-    moves.push(move);
 }
 
 function minimax(board, player) {
