@@ -7,12 +7,21 @@
     <title>TicTacToe</title>
     <style>
 
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         header {
             text-align: center;
+        }
+
+        h1 {
+            margin-top: 2rem;
         }
 
         #main-div {
@@ -24,10 +33,23 @@
         #grid {
             display: grid;
             grid-template: repeat(3, 150px) / repeat(3, 150px);
+            
         }
 
         .square {
             border: 1px solid black;
+        }
+
+        .move-div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        h2 {
+            font-size: 4rem;
+            font-weight: 400;
         }
 
     </style>
