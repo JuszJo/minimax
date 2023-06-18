@@ -1,20 +1,27 @@
-const board = [
+let board = [
     [0, 0, 0],
     [0, 0, 0],
     [0, 0, 0]
 ];
 
 const squares = document.getElementsByClassName('square');
-const winnerMessageElement = document.getElementById('winner')
-const moves = ['X', 'O'];
-const minMovesToWin = 5;
+const winnerMessageElement = document.getElementById('winner');
+const playAgainMessageElement = document.getElementById('play-again');
+const answerButtonDiv = document.getElementById('answer-button-div');
+const answerButtons = document.getElementsByClassName('answer-button');
+let moves = ['X', 'O'];
+let minMovesToWin = 5;
 let movesTaken = 0;
 let win = null;
 let winningMove = null;
 
 const squaresArray = Array.from(squares);
 
-squaresArray.forEach(square => square.addEventListener('click', handleSquareClick))
+squaresArray.forEach(square => square.addEventListener('click', handleSquareClick));
+
+const answerButtonsArray = Array.from(answerButtons);
+
+answerButtonsArray.forEach(answerButton => answerButton.addEventListener('click', handleAnswer))
 
 
 function addMoveToBoard(move, id) {
@@ -120,22 +127,70 @@ function checkWin() {
     }
 }
 
+function resetGame() {
+    board = [
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0]
+    ];
+
+    moves = ['X', 'O'];
+    minMovesToWin = 5;
+    movesTaken = 0;
+    win = null;
+    winningMove = null;
+
+    squaresArray.forEach(square => {
+        square.innerHTML = '';
+
+        square.ariaChecked = null;
+    })
+
+    winnerMessageElement.innerText = '';
+
+    playAgainMessageElement.innerText = '';
+
+    answerButtonDiv.style.display = "none";
+}
+
+function handleAnswer() {
+    switch (this.innerText) {
+        case "Yes":
+            resetGame()
+
+            break;
+
+        case "No":
+            
+            break;
+    
+        default:
+            break;
+    }
+}
+
 function endGame() {
     winningMove = win[0];
 
     winnerMessageElement.innerText = `${winningMove} Wins`;
+
+    playAgainMessageElement.innerText = "Play Again?"
+
+    answerButtonDiv.style.display = "block";
 }
 
 function handleSquareClick() {
-    const move = moves.slice(0, 1)[0];
+    if(!win) {
+        const move = moves.slice(0, 1)[0];
+    
+        addMoveToBoard(move, this.id);
+    
+        addMoveToHTMLBoard(this, move);
 
-    addMoveToBoard(move, this.id);
+        checkWin();
 
-    addMoveToHTMLBoard(this, move);
-
-    checkWin();
-
-    if(win) endGame(win);
+        if(win) endGame(win);
+    }
 }
 
 function minimax(board, player) {
