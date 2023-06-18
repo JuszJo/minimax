@@ -19,15 +19,21 @@ function addMoveToBoard(move, id) {
 
     const index = id % 3 == 0 ? 2 : id % 3 - 1;
 
-    board[row - 1][index] = move;
+    if(board[row - 1][index] == 0) {
+        board[row - 1][index] = move;
+    }
 }
 
 function addMoveToHTMLBoard(element, move) {
-    element.innerHTML = `
-        <div class="move-div">   
-            <h2>${move}</h2>
-        </div>
-    `;
+    if(!element.ariaChecked) {
+        element.innerHTML = `
+            <div class="move-div">   
+                <h2>${move}</h2>
+            </div>
+        `;
+
+        element.ariaChecked = true;
+    }
 }
 
 function checkWin() {
