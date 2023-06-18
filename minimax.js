@@ -7,14 +7,18 @@ const squaresArray = Array.from(squares);
 
 squaresArray.forEach(square => square.addEventListener('click', handleSquareClick))
 
-function handleSquareClick() {
-    const move = moves.splice(0, 1);
-
-    this.innerHTML = `
+function addMoveToHTML(element, move) {
+    element.innerHTML = `
         <div class="move-div">   
             <h2>${move}</h2>
         </div>
     `;
+}
+
+function handleSquareClick() {
+    const move = moves.splice(0, 1);
+
+    addMoveToHTML(this, move)
 
     moves.push(move);
 }
