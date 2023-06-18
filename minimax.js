@@ -5,10 +5,12 @@ const board = [
 ];
 
 const squares = document.getElementsByClassName('square');
+const winnerMessageElement = document.getElementById('winner')
 const moves = ['X', 'O'];
 const minMovesToWin = 5;
 let movesTaken = 0;
 let win = null;
+let winningMove = null;
 
 const squaresArray = Array.from(squares);
 
@@ -119,7 +121,9 @@ function checkWin() {
 }
 
 function endGame() {
-    
+    winningMove = win[0];
+
+    winnerMessageElement.innerText = `${winningMove} Wins`;
 }
 
 function handleSquareClick() {
@@ -131,7 +135,7 @@ function handleSquareClick() {
 
     checkWin();
 
-    if(win) endGame();
+    if(win) endGame(win);
 }
 
 function minimax(board, player) {
