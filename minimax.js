@@ -61,12 +61,25 @@ function checkRowWin() {
 }
 
 function checkColWin() {
+    const col1 = [board[0][0], board[1][0], board[2][0]];
+    const col2 = [board[0][1], board[1][1], board[2][1]];
+    const col3 = [board[0][2], board[1][2], board[2][2]];
 
+    let col1Win = false;
+    let col2Win = false;
+    let col3Win = false;
+
+    col1Win = col1.every(move => move != 0 && move == col1[0])
+    col2Win = col2.every(move => move != 0 && move == col2[0])
+    col3Win = col3.every(move => move != 0 && move == col3[0])
+
+    console.log(col1, col2, col3);
+    console.log(col1Win, col2Win, col3Win);
 }
 
 function checkWin() {
     if(movesTaken >= minMovesToWin) {
-        checkRowWin()
+        // checkRowWin()
         checkColWin()
     }
 }
