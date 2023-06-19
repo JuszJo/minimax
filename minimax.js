@@ -13,6 +13,7 @@ let moves = ['X', 'O'];
 let minMovesToWin = 5;
 let movesTaken = 0;
 let win = null;
+let draw = null;
 let winningMove = null;
 
 const squaresArray = Array.from(squares);
@@ -125,6 +126,28 @@ function checkWin() {
         else if(col) win = col;
         else if(cross) win = cross;
     }
+
+    if(movesTaken > 8 && !win) {
+        draw = true;
+    }
+}
+
+function endGame() {
+    winningMove = win[0];
+
+    winnerMessageElement.innerText = `${winningMove} Wins`;
+
+    playAgainMessageElement.innerText = "Play Again?"
+
+    answerButtonDiv.style.display = "block";
+}
+
+function drawGame() {
+    winnerMessageElement.innerText = `Draw`;
+
+    playAgainMessageElement.innerText = "Play Again?"
+
+    answerButtonDiv.style.display = "block";
 }
 
 function resetGame() {
@@ -138,6 +161,7 @@ function resetGame() {
     minMovesToWin = 5;
     movesTaken = 0;
     win = null;
+    draw = null;
     winningMove = null;
 
     squaresArray.forEach(square => {
@@ -169,16 +193,6 @@ function handleAnswer() {
     }
 }
 
-function endGame() {
-    winningMove = win[0];
-
-    winnerMessageElement.innerText = `${winningMove} Wins`;
-
-    playAgainMessageElement.innerText = "Play Again?"
-
-    answerButtonDiv.style.display = "block";
-}
-
 function handleSquareClick() {
     if(!win) {
         const move = moves.slice(0, 1)[0];
@@ -191,7 +205,8 @@ function handleSquareClick() {
 
         checkWin();
 
-        if(win) endGame(win);
+        if(win) endGame();
+        if(draw) drawGame();
     }
 }
 
