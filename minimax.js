@@ -187,6 +187,8 @@ function handleSquareClick() {
     
         addMoveToHTMLBoard(this, move);
 
+        minimax(board);
+
         checkWin();
 
         if(win) endGame(win);
